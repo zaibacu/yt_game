@@ -1,4 +1,4 @@
-package core;
+package lt.griaustinis.ytgame.core;
 
 import java.util.*;
 

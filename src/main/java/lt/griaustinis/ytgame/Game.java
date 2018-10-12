@@ -1,6 +1,10 @@
-import core.Command;
-import core.GameControls;
-import core.GameWindow;
+package lt.griaustinis.ytgame;
+
+import lt.griaustinis.ytgame.core.Command;
+import lt.griaustinis.ytgame.core.GameControls;
+import lt.griaustinis.ytgame.core.GameWindow;
+import lt.griaustinis.ytgame.graphics.GLRenderer;
+import lt.griaustinis.ytgame.graphics.Renderer;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -11,10 +15,12 @@ import static org.lwjgl.opengl.GL11.*;
 public class Game {
     private final GameWindow window;
     private final GameControls controls;
+    private final Renderer renderer;
 
     public Game(){
         this.window = new GameWindow();
         this.controls = new GameControls(this.window);
+        this.renderer = new GLRenderer();
     }
 
 
@@ -55,13 +61,12 @@ public class Game {
         // bindings available for use.
         GL.createCapabilities();
 
-        // Set the clear color
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while ( !glfwWindowShouldClose(window.getId()) ) {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+            renderer.clearScreen();
+            renderer.render();
 
             glfwSwapBuffers(window.getId()); // swap the color buffers
 
