@@ -5,7 +5,7 @@ import java.util.*;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 
-public class GameControls {
+public class GameControls implements GameResource {
     public enum ActionTypes{
         ON_PRESS,
         ON_RELEASE

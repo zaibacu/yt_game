@@ -9,7 +9,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-public class GameWindow {
+public class GameWindow implements GameResource {
     private long id;
 
     public GameWindow(){

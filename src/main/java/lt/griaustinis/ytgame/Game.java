@@ -3,24 +3,30 @@ package lt.griaustinis.ytgame;
 import lt.griaustinis.ytgame.core.Command;
 import lt.griaustinis.ytgame.core.GameControls;
 import lt.griaustinis.ytgame.core.GameWindow;
+import lt.griaustinis.ytgame.graphics.Drawable;
 import lt.griaustinis.ytgame.graphics.GLRenderer;
 import lt.griaustinis.ytgame.graphics.Renderer;
+import lt.griaustinis.ytgame.graphics.Sprite;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
-import org.lwjgl.opengl.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
 
 public class Game {
     private final GameWindow window;
     private final GameControls controls;
     private final Renderer renderer;
+    private final List<Drawable> gameObjects = new ArrayList<>();
 
     public Game(){
         this.window = new GameWindow();
         this.controls = new GameControls(this.window);
         this.renderer = new GLRenderer();
+        this.gameObjects.add(new Sprite(-0.5f, -0.5f));
+        this.gameObjects.add(new Sprite(0.5f, 0.5f));
     }
 
 
@@ -51,22 +57,18 @@ public class Game {
             }
         });
 
+        renderer.init();
+
     }
 
     private void loop() {
-        // This line is critical for LWJGL's interoperation with GLFW's
-        // OpenGL context, or any context that is managed externally.
-        // LWJGL detects the context that is current in the current thread,
-        // creates the GLCapabilities instance and makes the OpenGL
-        // bindings available for use.
-        GL.createCapabilities();
-
-
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while ( !glfwWindowShouldClose(window.getId()) ) {
             renderer.clearScreen();
-            renderer.render();
+            for(Drawable drawObj : gameObjects){
+                renderer.render(drawObj);
+            }
 
             glfwSwapBuffers(window.getId()); // swap the color buffers
 
@@ -79,6 +81,7 @@ public class Game {
     private void cleanup(){
         window.cleanup();
         controls.cleanup();
+        renderer.cleanup();
     }
 
     public static void main(String[] args) {

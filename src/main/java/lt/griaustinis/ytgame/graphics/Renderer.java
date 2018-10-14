@@ -1,6 +1,8 @@
 package lt.griaustinis.ytgame.graphics;
 
-public interface Renderer {
-    void render();
+import lt.griaustinis.ytgame.core.GameResource;
+
+public interface Renderer extends GameResource {
+    void render(Drawable drawObj);
     void clearScreen();
 }
