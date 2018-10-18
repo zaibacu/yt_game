@@ -1,5 +1,7 @@
 package lt.griaustinis.ytgame.graphics;
 
+import lt.griaustinis.ytgame.assets.Texture;
+
 import java.util.List;
 
 public interface Drawable {
@@ -8,4 +10,6 @@ public interface Drawable {
 
     float getX();
     float getY();
+
+    Texture getTexture();
 }

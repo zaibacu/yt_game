@@ -1,5 +1,8 @@
 package lt.griaustinis.ytgame;
 
+import lt.griaustinis.ytgame.assets.AssetFactory;
+import lt.griaustinis.ytgame.assets.GLAssetFactory;
+import lt.griaustinis.ytgame.assets.TextureKey;
 import lt.griaustinis.ytgame.core.Command;
 import lt.griaustinis.ytgame.core.GameControls;
 import lt.griaustinis.ytgame.core.GameWindow;
@@ -20,13 +23,13 @@ public class Game {
     private final GameControls controls;
     private final Renderer renderer;
     private final List<Drawable> gameObjects = new ArrayList<>();
+    private final AssetFactory assetFactory;
 
     public Game(){
         this.window = new GameWindow();
         this.controls = new GameControls(this.window);
         this.renderer = new GLRenderer();
-        this.gameObjects.add(new Sprite(-0.5f, -0.5f));
-        this.gameObjects.add(new Sprite(0.5f, 0.5f));
+        this.assetFactory = new GLAssetFactory();
     }
 
 
@@ -59,6 +62,8 @@ public class Game {
 
         renderer.init();
 
+        assetFactory.init();
+        this.gameObjects.add(new Sprite(assetFactory.getTexture(TextureKey.CHARACTER_STANDING_1), -0.5f, -0.5f));
     }
 
     private void loop() {
@@ -82,6 +87,7 @@ public class Game {
         window.cleanup();
         controls.cleanup();
         renderer.cleanup();
+        assetFactory.cleanup();
     }
 
     public static void main(String[] args) {
