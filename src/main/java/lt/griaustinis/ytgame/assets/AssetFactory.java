@@ -4,4 +4,5 @@ import lt.griaustinis.ytgame.core.GameResource;
 
 public interface AssetFactory extends GameResource {
     Texture getTexture(TextureKey key);
+    Animation getAnimation(AnimationKey key);
 }

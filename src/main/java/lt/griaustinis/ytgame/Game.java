@@ -1,5 +1,6 @@
 package lt.griaustinis.ytgame;
 
+import lt.griaustinis.ytgame.assets.AnimationKey;
 import lt.griaustinis.ytgame.assets.AssetFactory;
 import lt.griaustinis.ytgame.assets.GLAssetFactory;
 import lt.griaustinis.ytgame.assets.TextureKey;
@@ -63,15 +64,19 @@ public class Game {
         renderer.init();
 
         assetFactory.init();
-        this.gameObjects.add(new Sprite(assetFactory.getTexture(TextureKey.CHARACTER_STANDING_1), -0.5f, -0.5f));
+        this.gameObjects.add(new Sprite(assetFactory.getAnimation(AnimationKey.CHARACTER_WALKING), -0.5f, -0.5f));
     }
 
     private void loop() {
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
+        long lastRender = System.currentTimeMillis();
         while ( !glfwWindowShouldClose(window.getId()) ) {
+            float delta = (float)(System.currentTimeMillis() - lastRender) / 1000;
+            lastRender = System.currentTimeMillis();
             renderer.clearScreen();
             for(Drawable drawObj : gameObjects){
+                drawObj.update(delta);
                 renderer.render(drawObj);
             }
 

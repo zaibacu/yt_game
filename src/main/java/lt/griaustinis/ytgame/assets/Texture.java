@@ -8,6 +8,7 @@ import java.util.List;
 public class Texture {
     private final int id;
     private final List<TextureCoord> coords;
+    private float ratio = 1.0f;
 
     public Texture(int id, List<TextureCoord> coords){
         this.id = id;
@@ -22,6 +23,14 @@ public class Texture {
             new TextureCoord(1.0f, 1.0f),
             new TextureCoord(0.0f, 1.0f)
         );
+    }
+
+    public void setRatio(float ratio){
+        this.ratio = ratio;
+    }
+
+    public float getRatio(){
+        return ratio;
     }
 
     public int getId(){

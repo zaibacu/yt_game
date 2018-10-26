@@ -20,6 +20,8 @@ public class GLRenderer implements Renderer{
         //glScalef(0.5f, 0.5f, 1.0f);
         // A, B. Zip(A, B) -> a1, b1 ; a2, b2; a3, b3; a4, b4.
 
+        glScalef(drawObj.getTexture().getRatio(), 1.0f, 1.0f);
+
         glBegin(drawObj.getDrawType());
         Streams.zip(
                 drawObj.getVertices().stream(),

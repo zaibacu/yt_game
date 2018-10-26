@@ -1,5 +1,6 @@
 package lt.griaustinis.ytgame.graphics;
 
+import lt.griaustinis.ytgame.assets.Animation;
 import lt.griaustinis.ytgame.assets.Texture;
 
 import java.util.Arrays;
@@ -11,9 +12,9 @@ public class Sprite implements Drawable{
     private final List<Vertex> vertices;
     private final float x;
     private final float y;
-    private final Texture texture;
+    private final Animation animation;
 
-    public Sprite(Texture texture, float x, float y){
+    public Sprite(Animation animation, float x, float y){
         this.vertices = Arrays.asList(
             new Vertex(-0.5f, -0.5f),
             new Vertex(0.5f, -0.5f),
@@ -22,7 +23,7 @@ public class Sprite implements Drawable{
         );
         this.x = x;
         this.y = y;
-        this.texture = texture;
+        this.animation = animation;
     }
 
     public List<Vertex> getVertices(){
@@ -45,6 +46,11 @@ public class Sprite implements Drawable{
 
     @Override
     public Texture getTexture() {
-        return texture;
+        return animation.getCurrentFrame();
+    }
+
+    @Override
+    public void update(float delta) {
+        animation.update(delta);
     }
 }

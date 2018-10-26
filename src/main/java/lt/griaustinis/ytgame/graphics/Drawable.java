@@ -12,4 +12,6 @@ public interface Drawable {
     float getY();
 
     Texture getTexture();
+
+    void update(float delta);
 }
