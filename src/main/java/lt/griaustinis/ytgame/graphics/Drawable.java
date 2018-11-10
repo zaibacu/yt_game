@@ -1,6 +1,7 @@
 package lt.griaustinis.ytgame.graphics;
 
 import lt.griaustinis.ytgame.assets.Texture;
+import lt.griaustinis.ytgame.utils.ScreenCoord;
 
 import java.util.List;
 
@@ -8,8 +9,7 @@ public interface Drawable {
     List<Vertex> getVertices();
     int getDrawType();
 
-    float getX();
-    float getY();
+    ScreenCoord getScreenCoord();
 
     Texture getTexture();
 

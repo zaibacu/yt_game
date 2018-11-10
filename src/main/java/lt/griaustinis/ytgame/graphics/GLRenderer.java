@@ -1,6 +1,7 @@
 package lt.griaustinis.ytgame.graphics;
 
 import com.google.common.collect.Streams;
+import lt.griaustinis.ytgame.utils.ScreenCoord;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -15,7 +16,11 @@ public class GLRenderer implements Renderer{
 
         glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         glPushMatrix();
-        glTranslatef(drawObj.getX(), drawObj.getY(), 1.0f);
+
+        ScreenCoord coord = drawObj.getScreenCoord();
+        glTranslatef(coord.getX(), coord.getY(), coord.getZ());
+
+        glScalef(coord.getScaleX(), coord.getScaleY(), coord.getScaleZ());
         //glRotatef(45f, 0.0f, 0.0f, 1.0f);
         //glScalef(0.5f, 0.5f, 1.0f);
         // A, B. Zip(A, B) -> a1, b1 ; a2, b2; a3, b3; a4, b4.

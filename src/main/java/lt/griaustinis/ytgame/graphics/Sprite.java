@@ -2,6 +2,7 @@ package lt.griaustinis.ytgame.graphics;
 
 import lt.griaustinis.ytgame.assets.Animation;
 import lt.griaustinis.ytgame.assets.Texture;
+import lt.griaustinis.ytgame.utils.ScreenCoord;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,13 +36,8 @@ public class Sprite implements Drawable{
     }
 
     @Override
-    public float getX() {
-        return x;
-    }
-
-    @Override
-    public float getY() {
-        return y;
+    public ScreenCoord getScreenCoord() {
+        return new ScreenCoord(x, y, 1f, 1f);
     }
 
     @Override

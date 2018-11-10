@@ -4,13 +4,12 @@ import lt.griaustinis.ytgame.assets.AnimationKey;
 import lt.griaustinis.ytgame.assets.AssetFactory;
 import lt.griaustinis.ytgame.assets.GLAssetFactory;
 import lt.griaustinis.ytgame.assets.TextureKey;
+import lt.griaustinis.ytgame.core.Camera;
 import lt.griaustinis.ytgame.core.Command;
 import lt.griaustinis.ytgame.core.GameControls;
 import lt.griaustinis.ytgame.core.GameWindow;
-import lt.griaustinis.ytgame.graphics.Drawable;
-import lt.griaustinis.ytgame.graphics.GLRenderer;
-import lt.griaustinis.ytgame.graphics.Renderer;
-import lt.griaustinis.ytgame.graphics.Sprite;
+import lt.griaustinis.ytgame.graphics.*;
+import lt.griaustinis.ytgame.utils.GameCoord;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 
@@ -25,6 +24,7 @@ public class Game {
     private final Renderer renderer;
     private final List<Drawable> gameObjects = new ArrayList<>();
     private final AssetFactory assetFactory;
+    private PlayerModel player;
 
     public Game(){
         this.window = new GameWindow();
@@ -54,17 +54,31 @@ public class Game {
         window.init();
         controls.init();
 
-        controls.registerEvent(GLFW_KEY_ESCAPE, GameControls.ActionTypes.ON_RELEASE, new Command() {
-            @Override
-            public void execute() {
+        controls.registerEvent(GLFW_KEY_ESCAPE, GameControls.ActionTypes.ON_RELEASE, () -> {
                 glfwSetWindowShouldClose(window.getId(), true);
-            }
         });
 
         renderer.init();
 
         assetFactory.init();
-        this.gameObjects.add(new Sprite(assetFactory.getAnimation(AnimationKey.CHARACTER_WALKING), -0.5f, -0.5f));
+        player = new PlayerModel(0, 0, assetFactory);
+
+        controls.registerEvent(GLFW_KEY_A, GameControls.ActionTypes.ON_PRESS, () -> {
+            player.updatePosition(new GameCoord(-1, 0));
+        });
+
+        controls.registerEvent(GLFW_KEY_D, GameControls.ActionTypes.ON_PRESS, () -> {
+            player.updatePosition(new GameCoord(1, 0));
+        });
+
+        controls.registerEvent(GLFW_KEY_PAGE_UP, GameControls.ActionTypes.ON_PRESS, () -> {
+            Camera.getInstance().addZoom(-0.1f);
+        });
+
+        controls.registerEvent(GLFW_KEY_PAGE_DOWN, GameControls.ActionTypes.ON_PRESS, () -> {
+            Camera.getInstance().addZoom(0.1f);
+        });
+        this.gameObjects.add(player);
     }
 
     private void loop() {
